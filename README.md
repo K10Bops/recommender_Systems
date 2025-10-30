@@ -1,5 +1,5 @@
 # Recommender_Systems
-Cecommending recipes to food.com users.
+Recommending recipes to food.com users.
 
 ## Recommender Systems Project Summary
 
