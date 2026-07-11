@@ -999,3 +999,10 @@ for model_name, model in model_dict.items():
     output_file_name = model_name + '.csv'
     output_df.to_csv(output_file_name, index=False)
     print(f"Saved {output_file_name}")
+
+with open("metrics.txt", "w") as f:
+    f.write(overview.to_string())
+
+# and a plot, e.g.
+overview.plot(kind='bar')
+plt.savefig("model_results.png")
