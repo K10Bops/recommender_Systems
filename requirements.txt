@@ -1,0 +1,8 @@
+pandas
+numpy
+matplotlib
+scikit-learn
+scipy
+scikit-surprise
+nltk
+# Add 'ieseg-recsys' here if it is hosted on PyPI
