@@ -2,25 +2,36 @@ name: recommender_Systems_MLOPS
 on: [push]
 jobs:
   run:
-    runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: 'Train my model'
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: 'Train and Report'
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-
-          # Your ML workflow goes here
+          # Install dependencies
           pip install -r requirements.txt
+          
+          # Run the model script (ensure this outputs metrics.txt and model_results.png)
           python copy_of_ketan_individual_reccsys_2024.py
           
+          # Install CML tools dynamically
+          npm install -g @dvcorg/cml
+          
+          # Generate the report
           echo "## Model Metrics" > report.md
           cat metrics.txt >> report.md
           
-          echo "\n## Model Performance" >> report.md
+          echo -e "\n## Model Performance" >> report.md
           echo "Model performance metrics are on the plot below." >> report.md
           
-          cml-publish model_results.png --md >> report.md
+          # Publish artifacts
+          cml publish model_results.png --md >> report.md
           
-          cml-send-comment report.md
+          # Send the comment
+          cml send-comment report.md
