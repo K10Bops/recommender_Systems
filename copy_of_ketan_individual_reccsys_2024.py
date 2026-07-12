@@ -1002,3 +1002,22 @@ for model_name, model in model_dict.items():
     output_file_name = model_name + '.csv'
     output_df.to_csv(output_file_name, index=False)
     print(f"Saved {output_file_name}")
+
+# Save metrics table to metrics.txt
+with open("metrics.txt", "w") as f:
+    f.write(overview.to_string())
+
+# Generate and save plot
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(12, 6))
+overview.T.plot(kind='bar', ax=ax)
+plt.title("Model Performance Comparison")
+plt.ylabel("Score")
+plt.xlabel("Metrics")
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig("model_results.png", dpi=100, bbox_inches='tight')
+plt.close()
+
+print("Saved metrics.txt")
+print("Saved model_results.png")
