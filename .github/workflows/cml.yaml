@@ -1,11 +1,9 @@
 name: recommender_Systems_MLOPS
-on: [push]
+on: [push, pull_request]
 
 permissions:
   contents: read
   issues: write
-  pull_request: write
-
 jobs:
   run:
     runs-on: ubuntu-latest
