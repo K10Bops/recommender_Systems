@@ -117,8 +117,6 @@ pd.set_option("display.max_columns", 100)
 pd.set_option("display.max_colwidth", 100)
 pd.set_option("display.max_info_columns", 100)
 
-!pip freeze > requirements.txt
-
 """# Train & Metadata"""
 
 import urllib.request
