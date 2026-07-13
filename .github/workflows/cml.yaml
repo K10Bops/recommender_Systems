@@ -23,7 +23,7 @@ jobs:
           pip install -r requirements.txt
           
           # Run the model script (ensure this outputs metrics.txt and model_results.png)
-          python copy_of_ketan_individual_reccsys_2024.py
+          python Individual_reccsys_2024.py
           
           # Install CML tools dynamically
           npm install -g @dvcorg/cml
