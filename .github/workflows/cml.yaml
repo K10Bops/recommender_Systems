@@ -1,0 +1,42 @@
+name: recommender_Systems_MLOPS
+on: [push, pull_request]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: 'Train and Report'
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Install dependencies
+          pip install -r requirements.txt
+          
+          # Run the model script (ensure this outputs metrics.txt and model_results.png)
+          python copy_of_ketan_individual_reccsys_2024.py
+          
+          # Install CML tools dynamically
+          npm install -g @dvcorg/cml
+          
+          # Generate the report
+          echo "## Model Metrics" > report.md
+          cat metrics.txt >> report.md
+          
+          echo -e "\n## Model Performance" >> report.md
+          echo "Model performance metrics are on the plot below." >> report.md
+          
+          # Publish artifacts
+          cml publish model_results.png --md >> report.md
+          
+          # Send the comment
+          cml send-comment report.md
